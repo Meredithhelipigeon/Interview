@@ -15,4 +15,14 @@ public:
         }
         return ret;
     }
+
+    int maxSubArray2(vector<int>& nums) {
+        int remain = 0;
+        int ret = nums[0];
+        for(auto num: nums) {
+            ret = max(ret, remain+num);
+            remain = max(remain+num,0);
+        }
+        return ret;
+    }
 };
