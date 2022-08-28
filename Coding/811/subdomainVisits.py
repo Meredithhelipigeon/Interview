@@ -32,8 +32,5 @@ class Solution2:
                     domains_to_counts[curDomainString] += count
                 else:
                     domains_to_counts[curDomainString] = count
-        ret = []
-        for domain_key in domains_to_counts:
-            retDomainCount =  str(domains_to_counts[domain_key]) + " " + domain_key 
-            ret.append(retDomainCount)
+        ret = ["{} {}".format(count, dm) for (dm, count) in domains_to_counts.items()]
         return ret
