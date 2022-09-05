@@ -39,3 +39,39 @@ public:
         return result;
     }
 };
+
+// Time efficiency: O(n^2)
+class Solution2 {
+public:
+    void twoSum(vector<int>& nums, int start, vector<vector<int>> &res){
+        int left = start + 1;
+        int right = nums.size()-1;
+        while (left < right) {
+            int curSum = nums[left] + nums[right] + nums[start];
+            if(curSum == 0){
+                res.push_back({nums[left],  nums[right], nums[start]});
+                left += 1;
+                right -= 1;
+                while (left < right && nums[left] == nums[left-1]){
+                    left += 1;
+                }
+            } else if (curSum > 0) {
+                right -= 1;
+            } else {
+                left += 1;
+            }
+        }
+        return;
+    }
+    
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> result;
+        for(int i = 0; i < nums.size(); ++i){
+            if (i == 0 || nums[i] != nums[i-1]) {
+                twoSum(nums, i, result);
+            }
+        }
+        return result;
+    }
+};
