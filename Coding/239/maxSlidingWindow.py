@@ -71,4 +71,3 @@ class Solution:
             ret.append(maximumCandidate[0])
         
         return ret
-
