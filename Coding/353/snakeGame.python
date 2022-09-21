@@ -1,0 +1,38 @@
+class SnakeGame:
+
+    def __init__(self, width: int, height: int, food: List[List[int]]):
+        self.curFoodNum = 0
+        self.width = width
+        self.height = height
+        self.cur = (0,0)
+        self.directions = {"R":[0,1], "L":[0,-1], "U":[-1,0],"D":[1,0]}
+        self.food = food
+        self.bodySet = OrderedDict()
+        self.bodySet[(0,0)]=None
+        self.bodyLength = 1
+
+    def move(self, direction: str) -> int:
+        if self.curFoodNum < len(self.food):
+            foodPos = self.food[self.curFoodNum]
+        else:
+            foodPos = [-1,-1]
+        curPos = self.cur
+        movDir = self.directions[direction]
+        if ((0 <= curPos[0]+movDir[0] < self.height) and (0 <=curPos[1]+movDir[1]<self.width)):
+            self.cur = (curPos[0]+movDir[0], curPos[1]+movDir[1])
+            if (self.cur[0] == foodPos[0] and self.cur[1] == foodPos[1]):
+                self.curFoodNum += 1
+                self.bodyLength +=1
+            else:
+                self.bodySet.popitem(last=False)
+            if self.cur in self.bodySet: 
+                return -1
+            self.bodySet[self.cur] = None
+            return self.curFoodNum
+        else:
+            return -1
+
+
+# Your SnakeGame object will be instantiated and called as such:
+# obj = SnakeGame(width, height, food)
+# param_1 = obj.move(direction)
