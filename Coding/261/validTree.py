@@ -39,3 +39,29 @@ class Solution:
                 return False  
         
         return ret
+
+# Time efficiency: O(V+E)
+# Space complexity: O(V+E)   
+class Solution2:
+    def validTree(self, n: int, edges: List[List[int]]) -> bool:
+        visited = [False]*n
+        neighbours = [set() for i in range(n)]
+        # preprocess neighbours
+        for e in edges:
+            neighbours[e[0]].add(e[1])
+            neighbours[e[1]].add(e[0])
+        
+        def dfs(curNode):
+            for n in neighbours[curNode]:
+                if not visited[n]:
+                    visited[n]=True
+                    neighbours[n].remove(curNode)
+                    if not dfs(n): return False
+                else: return False
+            return True
+        
+        start = 0
+        visited[start]=True
+        
+        # no cycle and connected
+        return dfs(start) and (visited.count(False)==0)
